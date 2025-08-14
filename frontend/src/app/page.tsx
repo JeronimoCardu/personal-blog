@@ -9,7 +9,7 @@ export default async function Page() {
     return;
   }
   return (
-    <main className="h-screen">
+    <main >
       {posts.map((post: PostType) => (
         <Link key={post.id} href={`/post/${post.id}`}>
           <article className=" cursor-pointer hover:bg-gray-200 flex items-center justify-between py-4 border-b-1 border-black">

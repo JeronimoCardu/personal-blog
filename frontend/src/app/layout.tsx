@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className="w-1/3 px-8 border-x-1 border-black mx-auto">
+    <html className='bg-[#182d56]' lang="en">
+      <body className="w-1/3 px-8 border-x-1 bg-white h-screen border-black mx-auto">
         <header className="flex justify-between py-6 border-b-1 border-black items-center">
           <h1>POSTS</h1>
           <CiCirclePlus size={23} />
