@@ -1,13 +1,30 @@
+"use client";
 import Link from "next/link";
 import { PostType } from "../../../types/post";
+import { useEffect, useState } from "react";
 
-export default async function Admin() {
-  const data = await fetch("http://localhost:8080");
-  const posts = await data.json();
-  if (!data.ok) {
-    console.log("error");
-    return;
-  }
+export default function Admin() {
+  const [posts, setPosts] = useState<PostType[]>([]);
+  useEffect(() => {
+    fetch("http://localhost:8080")
+      .then((res) => res.json())
+      .then((data) => setPosts(data))
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleDeletePost = async (id: string) => {
+    try {
+      const data = await fetch(`http://localhost:8080/${id}`, {
+        method: "DELETE",
+        headers: { "Content-type": "application/json" },
+      });
+      if (!data.ok) throw new Error("Error to delete post");
+      setPosts(posts.filter((post) => post.id !== id));
+    } catch (e) {
+      console.log("There is a error: ", e);
+    }
+  };
+
   return (
     <>
       {posts.map((post: PostType) => (
@@ -20,7 +37,12 @@ export default async function Admin() {
             <Link href={`/post/${post.id}/edit`}>
               <button className="hover:underline cursor-pointer">edit</button>
             </Link>
-            <button className="hover:underline cursor-pointer">delete</button>
+            <button
+              onClick={() => handleDeletePost(String(post.id))}
+              className="hover:underline hover:text-red-500 cursor-pointer"
+            >
+              delete
+            </button>
           </div>
         </article>
       ))}

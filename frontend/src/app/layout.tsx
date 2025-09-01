@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
 import { FaHome, FaRegUser } from "react-icons/fa";
+import { CiCirclePlus } from "react-icons/ci";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -14,11 +15,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html className="bg-[#182d56]" lang="en">
       <body
         cz-shortcut-listen="true"
-        className="w-1/3 px-8 border-x-1 bg-white h-screen border-black mx-auto"
+        className="w-1/3 px-8 relative border-x-1 bg-white h-screen border-black mx-auto"
       >
         <header className="flex justify-between py-6 border-b-1 border-black items-center">
           <h1 className="font-bold text-2xl italic">PERSONAL BLOG</h1>
-          <div className='flex gap-4'>
+          <div className="flex gap-4">
             <Link href={"/"}>
               <FaHome size={23} />
             </Link>
@@ -28,6 +29,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
         </header>
         {children}
+        <Link className="absolute bottom-10 right-10" href={"/create"}>
+          <CiCirclePlus
+            className="hover:bg-red-500 rounded-full hover:text-white"
+            size={60}
+          />
+        </Link>
       </body>
     </html>
   );

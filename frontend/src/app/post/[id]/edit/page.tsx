@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function EditPost() {
@@ -9,6 +9,8 @@ export default function EditPost() {
     text: "",
   });
   const { id } = useParams();
+  const router = useRouter();
+
   useEffect(() => {
     fetch(`http://localhost:8080/${id}`)
       .then((res) => res.json())
@@ -23,7 +25,7 @@ export default function EditPost() {
         body: JSON.stringify(dataPost),
       });
       if (!data.ok) throw new Error("error to update the post");
-      await data.json();
+      router.back();
     } catch (e) {
       console.log("there is a error: ", e);
     }
